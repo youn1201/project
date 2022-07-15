@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- CSS only -->
+        <meta charset="utf-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    </head>
+    <body>
+        <button id="btn">추가</button>
+        <button id="get">가져오기</button>
+        <div id="box"></div>
+        <script>
+            function addInput(value) {
+                const div = document.createElement('div');
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = value;
+                input.className = 'form-control'
+
+                const button = document.createElement('button');
+                button.innerText = 'X';
+                button.addEventListener('click', function() {
+                    div.remove();
+                });
+
+                div.appendChild(input);
+                div.appendChild(button);
+
+                document.querySelector('#box').appendChild(div);
+            }
+
+window.addEventListener('load', function() {
+    // 페이지가 로딩됐을 때 작업을 여기서 실행
+    const arr = JSON.parse(localStorage.getItem('array'));
+    if ( arr !== null ) {
+        gArray = arr;
+        for ( let i = 0;i < gArray.length;i++ ) {
+            addInput(gArray[i]);
+        }
+    }
+});
+document
+    .querySelector('#btn')
+    .addEventListener('click', function () {
+        addInput('');
+    })
+
+    let gArray = [];
+    document
+        .querySelector('#get')
+        .addEventListener('click', function () {
+            const arr = document.querySelectorAll('input');
+            gArray = [];
+            for ( let i = 0;i < arr.length;i++ ) {
+                gArray.push(arr[i].value)
+            }
+            localStorage.setItem('array', JSON.stringify(gArray));
+        });
+        </script>
+    </body>
+</html>
